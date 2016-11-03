@@ -632,6 +632,7 @@ LUKS.prototype.addLUKSKey = function (luksHeader, existingPassKey, newPassKey, o
  */
 LUKS.prototype.removeLUKSKey = function (luksHeader, index, options) {
     var self = this;
+    options = optionsHandler(options,self.options);
     let info = self.getLUKSHeaderInfo(luksHeader);
     if (index >= info.numkeys)
         throw new Error('Index is out of bounds');
