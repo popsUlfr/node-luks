@@ -1,0 +1,15 @@
+{
+  "name": "node-luks",
+  "version": "0.1.0",
+  "description": "Linux Unified Key Setup (LUKS) for nodejs. Encrypt files using a master key respecting the luks spec.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Philipp Richter",
+  "license": "ISC",
+  "dependencies": {
+    "struct": "0.0.11",
+    "uuid": "^2.0.3"
+  }
+}
