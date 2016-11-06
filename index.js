@@ -484,7 +484,7 @@ LUKS.prototype.getLUKSHeaderInfo = function (luksHeader) {
     info.emptyKeySlotIndex = -1;
     info.keyblock = [];
     let luks_phdr_keyblock_struct = luksHeaderKeyblockStruct();
-    for (let offset = LUKS_HEADER_LENGTH; offset < luksHeader.length; offset+=LUKS_HEADER_KEYBLOCK_LENGTH) {
+    for (let offset = LUKS_HEADER_LENGTH; (offset + LUKS_HEADER_KEYBLOCK_LENGTH) <= luksHeader.length; offset+=LUKS_HEADER_KEYBLOCK_LENGTH) {
         luks_phdr_keyblock_struct._setBuff(luksHeader.slice(offset,offset+LUKS_HEADER_KEYBLOCK_LENGTH));
         let luks_phdr_keyblock = luks_phdr_keyblock_struct.fields;
         if (luks_phdr_keyblock.active === LUKS_KEY_DISABLED ||

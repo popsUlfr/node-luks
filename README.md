@@ -11,7 +11,7 @@ luks.createLUKSHeader(passKey : Buffer|String [,options : Object]) : Buffer;
 /* Header information */
 luks.getLUKSHeaderInfo(luksHeader : Buffer) : Object;
 luks.getLUKSKeyslotIndex(luksHeader : Buffer, passKey : Buffer|String [,options : Object]) : Number;
-luks.getLUKSMasterKey(luksHeader : Buffer, passKey : Buffer|String [,options]) : Buffer;
+luks.getLUKSMasterKey(luksHeader : Buffer, passKey : Buffer|String [,options : Object]) : Buffer;
 
 /* Modify passkeys */
 luks.addLUKSKeyWithMasterKey(luksHeader : Buffer, masterKey : Buffer, passKey : Buffer|String [,options : Object]) : Number;
