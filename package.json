@@ -2,7 +2,12 @@
   "name": "node-luks",
   "version": "0.1.0",
   "description": "Linux Unified Key Setup (LUKS) for nodejs. Encrypt files using a master key respecting the luks spec.",
+  "keywords": ["luks","encryption","decryption","crypto","masterkey"],
   "main": "index.js",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/popsUlfr/node-luks.git"
+  },
   "scripts": {
     "test": "mocha",
     "docs": "jsdoc index.js -p -d ./docs"
