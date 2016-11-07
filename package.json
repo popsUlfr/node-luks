@@ -7,8 +7,8 @@
     "test": "mocha",
     "docs": "jsdoc index.js -p -d ./docs"
   },
-  "author": "Philipp Richter",
-  "license": "ISC",
+  "author": "Philipp Richter <richterphilipp.pops@gmail.com>",
+  "license": "MIT",
   "dependencies": {
     "struct": "0.0.11",
     "uuid": "^2.0.3"
