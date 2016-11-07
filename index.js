@@ -460,7 +460,7 @@ function tryLUKSKeyslotIndex (luksHeader, info, index, passKey, options) {
 
 /**
  * Parses a LUKS header for its information
- * @param luksHeader {Buffer}
+ * @param {Buffer} luksHeader to fetch information for
  * @returns {Object} header information
  */
 LUKS.prototype.getLUKSHeaderInfo = function (luksHeader) {
@@ -569,7 +569,7 @@ LUKS.prototype.getLUKSKeyslotIndex = function (luksHeader, passKey, options) {
  * Recover the masterkey using a passkey
  * @param {Buffer} luksHeader
  * @param {Buffer|String} passKey to unlock one of the keyslots
- * @param {Object} options options to supply to the function
+ * @param {Object} [options] options to supply to the function
  * @returns {Buffer} the masterkey or null if passkey did not match any stored key
  */
 LUKS.prototype.getLUKSMasterKey = function (luksHeader, passKey, options) {
@@ -586,9 +586,9 @@ LUKS.prototype.getLUKSMasterKey = function (luksHeader, passKey, options) {
 
 /**
  * Generates a new LUKS header using a masterKey
- * @param masterKey {Buffer}
- * @param options {Object}
- * @returns {Buffer}
+ * @param {Buffer} masterKey the length of the key should make sense for the chosen cipher mode
+ * @param {Object} [options] options to use during header creation
+ * @returns {Buffer} the generated luks header
  */
 LUKS.prototype.createLUKSHeaderWithMasterKey = function (masterKey, options) {
     return createLUKSHeaderWithMasterKey(masterKey, optionsHandler(options,this.options));
@@ -597,7 +597,7 @@ LUKS.prototype.createLUKSHeaderWithMasterKey = function (masterKey, options) {
 /**
  * Creates a luks header initialized with a passKey
  * @param {Buffer|String} passKey used to decrypt the master key
- * @param {Object} [options] options to supply to the function
+ * @param {Object} [options] options to use during header creation
  * @returns {Buffer} the luks header
  */
 LUKS.prototype.createLUKSHeader = function (passKey, options) {
@@ -615,6 +615,7 @@ LUKS.prototype.createLUKSHeader = function (passKey, options) {
  * @param {Buffer|String} existingPassKey existing passKey to unlock masterkey
  * @param {Buffer|String} newPassKey the new key to add to an available keyblock
  * @param {Object} [options] options to use during key insertion
+ * @returns {Number} The keyslot the passKey has been added to
  */
 LUKS.prototype.addLUKSKey = function (luksHeader, existingPassKey, newPassKey, options) {
     var self = this;
