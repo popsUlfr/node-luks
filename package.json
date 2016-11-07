@@ -4,7 +4,8 @@
   "description": "Linux Unified Key Setup (LUKS) for nodejs. Encrypt files using a master key respecting the luks spec.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "docs": "jsdoc index.js -p -d ./docs"
   },
   "author": "Philipp Richter",
   "license": "ISC",

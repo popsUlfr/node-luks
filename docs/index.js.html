@@ -1,8 +1,36 @@
-'use strict';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: index.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: index.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
 
 /**
  * @file Main LUKS file containing class and methods
- * @author Philipp Richter <richterphilipp.pops@gmail.com>
+ * @author Philipp Richter &lt;richterphilipp.pops@gmail.com>
  */
 
 const Crypto = require('crypto');
@@ -256,7 +284,7 @@ function createLUKSHeaderWithMasterKey (masterKey, options) {
 
     let baseOffset = Math.trunc(buffer.length / options.luks_sector_size) + 1;
     let keyMaterialSectors = Math.trunc((options.luks_stripes * luks_phdr.keyBytes) / options.luks_sector_size) + 1;
-    for (let i = 0; i < options.luks_numkeys; ++i) {
+    for (let i = 0; i &lt; options.luks_numkeys; ++i) {
         // Align keyslot up to multiple of LUKS_ALIGN_KEYSLOTS
         baseOffset = roundUp(baseOffset, options.luks_sector_size, options.luks_align_keyslots);
         luks_phdr.keyblock[i].active = LUKS_KEY_DISABLED;
@@ -278,7 +306,7 @@ function createLUKSHeaderWithMasterKey (masterKey, options) {
  * @param {number} size - amount of bytes to XOR
  */
 function xorBlock (src1,src2,dest,size) {
-    for (let i = 0; i < size; ++i) {
+    for (let i = 0; i &lt; size; ++i) {
         dest[i] = src1[i] ^ src2[i];
     }
 }
@@ -299,7 +327,7 @@ function diffuse (src, dst, size) {
      * more than just a single data block
      */
     let i = 0;
-    for (; i < fullblocks; ++i) {
+    for (; i &lt; fullblocks; ++i) {
         let sha1_hash = Crypto.createHash('sha1');
         let IV = new Buffer(4);
         IV.writeUInt32BE(i,0);
@@ -333,7 +361,7 @@ function afSplit(src,dest,blocksize,stripes) {
     bufblock.fill(0);
     /* process everything except the last block */
     let i = 0;
-    for(; i < stripes - 1; ++i) {
+    for(; i &lt; stripes - 1; ++i) {
         let offset = blocksize * i;
         Crypto.randomBytes(blocksize).copy(dest,offset);
         xorBlock(dest.slice(offset,offset+blocksize),bufblock,bufblock,blocksize);
@@ -356,7 +384,7 @@ function afMerge (src, dst, blocksize, stripes) {
     let bufblock = new Buffer(blocksize);
     bufblock.fill(0);
     let i = 0;
-    for(; i < stripes - 1; ++i) {
+    for(; i &lt; stripes - 1; ++i) {
         let offset = blocksize * i;
         xorBlock(src.slice(offset,offset+blocksize),bufblock,bufblock,blocksize);
         diffuse(bufblock,bufblock,blocksize);
@@ -538,7 +566,7 @@ LUKS.prototype.getLUKSHeaderInfo = function (luksHeader) {
     info.emptyKeySlotIndex = -1;
     info.keyblock = [];
     let luks_phdr_keyblock_struct = luksHeaderKeyblockStruct();
-    for (let offset = LUKS_HEADER_LENGTH; (offset + LUKS_HEADER_KEYBLOCK_LENGTH) <= luksHeader.length; offset+=LUKS_HEADER_KEYBLOCK_LENGTH) {
+    for (let offset = LUKS_HEADER_LENGTH; (offset + LUKS_HEADER_KEYBLOCK_LENGTH) &lt;= luksHeader.length; offset+=LUKS_HEADER_KEYBLOCK_LENGTH) {
         luks_phdr_keyblock_struct._setBuff(luksHeader.slice(offset,offset+LUKS_HEADER_KEYBLOCK_LENGTH));
         let luks_phdr_keyblock = luks_phdr_keyblock_struct.fields;
         if (luks_phdr_keyblock.active === LUKS_KEY_DISABLED ||
@@ -550,7 +578,7 @@ LUKS.prototype.getLUKSHeaderInfo = function (luksHeader) {
                 }
             }
             info.keyblock.push(keyblock);
-            if (info.emptyKeySlotIndex < 0 && luks_phdr_keyblock.active === LUKS_KEY_DISABLED)
+            if (info.emptyKeySlotIndex &lt; 0 &amp;&amp; luks_phdr_keyblock.active === LUKS_KEY_DISABLED)
                 info.emptyKeySlotIndex = info.numkeys;
             ++info.numkeys;
         }
@@ -577,7 +605,7 @@ LUKS.prototype.addLUKSKeyWithMasterKey = function (luksHeader, masterKey, passKe
         throw new Error('MasterKey is not a buffer');
     passKey = passKeyHandler(passKey);
     let info = self.getLUKSHeaderInfo(luksHeader);
-    if (info.emptyKeySlotIndex < 0)
+    if (info.emptyKeySlotIndex &lt; 0)
         throw new Error('No remaining key slot');
     options = optionsHandler(options,self.options);
     options.luks_numkeys = info.numkeys;
@@ -616,7 +644,7 @@ LUKS.prototype.getLUKSKeyslotIndex = function (luksHeader, passKey, options) {
     passKey = passKeyHandler(passKey);
     options = optionsHandler(options,self.options);
     let info = self.getLUKSHeaderInfo(luksHeader);
-    for (let i = 0; i < info.numkeys; ++i) {
+    for (let i = 0; i &lt; info.numkeys; ++i) {
         if (tryLUKSKeyslotIndex(luksHeader, info, i, passKey, options) !== null)
             return i;
     }
@@ -636,7 +664,7 @@ LUKS.prototype.getLUKSMasterKey = function (luksHeader, passKey, options) {
     passKey = passKeyHandler(passKey);
     options = optionsHandler(options,self.options);
     let info = self.getLUKSHeaderInfo(luksHeader);
-    for (let i = 0; i < info.numkeys; ++i) {
+    for (let i = 0; i &lt; info.numkeys; ++i) {
         let masterKeyCandidate = tryLUKSKeyslotIndex(luksHeader, info, i, passKey, options);
         if (masterKeyCandidate !== null) return masterKeyCandidate;
     }
@@ -779,3 +807,26 @@ LUKS.prototype.decryptLUKS = function (luksHeader, passKey, options) {
 };
 
 module.exports = LUKS;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="LUKS.html">LUKS</a></li></ul><h3>Global</h3><ul><li><a href="global.html#afMerge">afMerge</a></li><li><a href="global.html#afSplit">afSplit</a></li><li><a href="global.html#createLUKSHeaderWithMasterKey">createLUKSHeaderWithMasterKey</a></li><li><a href="global.html#decrypt">decrypt</a></li><li><a href="global.html#diffuse">diffuse</a></li><li><a href="global.html#encrypt">encrypt</a></li><li><a href="global.html#getCipher">getCipher</a></li><li><a href="global.html#getDecipher">getDecipher</a></li><li><a href="global.html#luksHeaderKeyblockStruct">luksHeaderKeyblockStruct</a></li><li><a href="global.html#luksHeaderStruct">luksHeaderStruct</a></li><li><a href="global.html#luksHeaderStructComplete">luksHeaderStructComplete</a></li><li><a href="global.html#optionsHandler">optionsHandler</a></li><li><a href="global.html#passKeyHandler">passKeyHandler</a></li><li><a href="global.html#roundUp">roundUp</a></li><li><a href="global.html#tryLUKSKeyslotIndex">tryLUKSKeyslotIndex</a></li><li><a href="global.html#xorBlock">xorBlock</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.2</a> on Mon Nov 07 2016 11:06:19 GMT+0100 (CET)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -33,29 +33,29 @@ $ npm test
 ### LUKS Header Creation
 
 [**createLUKSHeaderWithMasterKey**](#createluksheaderwithmasterkey)(masterKey : [_Buffer_](https://nodejs.org/api/buffer.html) [,[options](#options) : _Object_]) : [_Buffer_](https://nodejs.org/api/buffer.html)  
-[**createLUKSHeader**](#createluksheader)(passKey : _[Buffer](https://nodejs.org/api/buffer.html)|String_ [,[options](#options) : _Object_]) : [_Buffer_](https://nodejs.org/api/buffer.html)
+[**createLUKSHeader**](#createluksheader)(passKey : _[Buffer](https://nodejs.org/api/buffer.html)|string_ [,[options](#options) : _Object_]) : [_Buffer_](https://nodejs.org/api/buffer.html)
 
 ### LUKS Header Information
 
-[**getLUKSHeaderInfo**](#getluksheaderinfo)(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html)) : _Object_  
-[**getLUKSKeyslotIndex**](#getlukskeyslotindex)(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html), passKey : _[Buffer](https://nodejs.org/api/buffer.html)|String_ [,[options](#options) : _Object_]) : _Number_  
-[**getLUKSMasterKey**](#getluksmasterkey)(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html), passKey : _[Buffer](https://nodejs.org/api/buffer.html)|String_ [,[options](#options) : _Object_] : _Object_]) : [_Buffer_](https://nodejs.org/api/buffer.html)  
+[**getLUKSHeaderInfo**](#getluksheaderinfo)(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html)) : [_LUKSInfo_](#luksinfo)  
+[**getLUKSKeyslotIndex**](#getlukskeyslotindex)(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html), passKey : _[Buffer](https://nodejs.org/api/buffer.html)|string_ [,[options](#options) : _Object_]) : _number_  
+[**getLUKSMasterKey**](#getluksmasterkey)(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html), passKey : _[Buffer](https://nodejs.org/api/buffer.html)|string_ [,[options](#options) : _Object_]) : [_Buffer_](https://nodejs.org/api/buffer.html)  
 
 ### LUKS Passkey Modification
 
-[**addLUKSKeyWithMasterKey**](#addlukskeywithmasterkey)(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html), masterKey : [_Buffer_](https://nodejs.org/api/buffer.html), passKey : _[Buffer](https://nodejs.org/api/buffer.html)|String_ [,[options](#options) : _Object_]) : _Number_  
-[**addLUKSKey**](#addlukskey)(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html), existingPassKey : _[Buffer](https://nodejs.org/api/buffer.html)|String_, newPassKey : _[Buffer](https://nodejs.org/api/buffer.html)|String_ [,[options](#options) : _Object_]) : _Number_  
-[**removeLUKSKey**](#removelukskey)(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html), index : _Number_ [,[options](#options) : _Object_]) : _void_
+[**addLUKSKeyWithMasterKey**](#addlukskeywithmasterkey)(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html), masterKey : [_Buffer_](https://nodejs.org/api/buffer.html), passKey : _[Buffer](https://nodejs.org/api/buffer.html)|string_ [,[options](#options) : _Object_]) : _number_  
+[**addLUKSKey**](#addlukskey)(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html), existingPassKey : _[Buffer](https://nodejs.org/api/buffer.html)|string_, newPassKey : _[Buffer](https://nodejs.org/api/buffer.html)|string_ [,[options](#options) : _Object_]) : _number_  
+[**removeLUKSKey**](#removelukskey)(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html), index : _number_ [,[options](#options) : _Object_]) : _void_
 
 ### LUKS Data Encryption/Decryption
 
 [**encryptLUKSWithMasterKey**](#encryptlukswithmasterkey)(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html), masterKey : [_Buffer_](https://nodejs.org/api/buffer.html) [,[options](#options) : _Object_]) : [_stream.Duplex_](https://nodejs.org/api/stream.html#stream_class_stream_duplex)  
-[**encryptLUKS**](#encryptluks)(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html), passKey : _[Buffer](https://nodejs.org/api/buffer.html)|String_ [,[options](#options) : _Object_]) : [_stream.Duplex_](https://nodejs.org/api/stream.html#stream_class_stream_duplex)  
+[**encryptLUKS**](#encryptluks)(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html), passKey : _[Buffer](https://nodejs.org/api/buffer.html)|string_ [,[options](#options) : _Object_]) : [_stream.Duplex_](https://nodejs.org/api/stream.html#stream_class_stream_duplex)  
 [**decryptLUKSWithMasterKey**](#decryptlukswithmasterkey)(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html), masterKey : [_Buffer_](https://nodejs.org/api/buffer.html) [,[options](#options) : _Object_]) : [_stream.Duplex_](https://nodejs.org/api/stream.html#stream_class_stream_duplex)  
-[**decryptLUKS**](#decryptluks)(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html), passKey : _[Buffer](https://nodejs.org/api/buffer.html)|String_ [,[options](#options) : _Object_]) : [_stream.Duplex_](https://nodejs.org/api/stream.html#stream_class_stream_duplex)  
+[**decryptLUKS**](#decryptluks)(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html), passKey : _[Buffer](https://nodejs.org/api/buffer.html)|string_ [,[options](#options) : _Object_]) : [_stream.Duplex_](https://nodejs.org/api/stream.html#stream_class_stream_duplex)  
 
 
-## Options <a id="options"></a>
+## <a id="options"></a> Options
 
 ### Default options
 ```javascript
@@ -94,6 +94,34 @@ $ npm test
 	luks_pwd_iter: 10000            /* PBKDF2 iterations for the passkey, same as for luks_mkd_iter it really depends on the performance of the machine */
 	                                /* the user supplied passkey is not stored as is in a keyblock, it is run through PBKDF2 to get an entropy rich version of the passkey in order to encrypt the master key */
 }
+```
+
+## <a id="luksinfo"></a> Info Object
+
+```javascript
+/**
+ * @typedef LUKSInfo
+ * @type {Object}
+ * @property {string} magic - LUKS magic value. (binary)
+ * @property {number} version - LUKS header version.
+ * @property {string} cipherName - Name of the cipher.
+ * @property {string} cipherMode - Name of the ciphermode.
+ * @property {string} hashSpec - Name of the hash spec.
+ * @property {number} payloadOffset - Offset in sectors where the bulk data starts.
+ * @property {number} keyBytes - Length of the master key in bytes.
+ * @property {string} mkDigest - The digest of the masterKey. (binary)
+ * @property {string} mkDigestSalt - The salt of the digest. (binary)
+ * @property {number} mkDigestIterations - Amount of iterations for the master key digest.
+ * @property {string} uuid - UUID for the header.
+ * @property {number} numkeys - Amount of keyslots.
+ * @property {number} emptyKeySlotIndex - Next available keyslot index.
+ * @property {Object[]} keyblock - Array of keyblocks.
+ * @property {number} keyblock[].active - Active flag of the keyslot.
+ * @property {number} keyblock[].passwordIterations - Number of iterations for the password in an individual keyslot.
+ * @property {string} keyblock[].passwordSalt - Salt used for during the password hashing.
+ * @property {number} keyblock[].keyMaterialOffset - Offset of the key material in sectors.
+ * @property {number} keyblock[].stripes - Amount of stripes for the anti-forensic split.
+ */
 ```
 
 ## LUKS Header Layout
@@ -139,7 +167,9 @@ KEY MATERIALS : KEYBLOCK_KEY_MATERIAL_OFFSET marks the beginning of a key materi
 ```javascript
 /**
  * LUKS Constructor
- * @param {Object} [options] see customizable variables
+ * @constructor
+ * @public
+ * @param {LUKSOptions} [options] Customizable variables, fallback to default options for missing fields
  */
 ```
 ##### Example:
@@ -152,8 +182,9 @@ var luks = new LUKS();
 ```javascript
 /**
  * Generates a new LUKS header using a masterKey
- * @param {Buffer} masterKey the length of the key should make sense for the chosen cipher mode
- * @param {Object} [options] options to use during header creation
+ * @public
+ * @param {Buffer} masterKey - the length of the key should make sense for the chosen cipher mode
+ * @param {LUKSOptions} [options] - options to use during header creation
  * @returns {Buffer} the generated luks header
  */
 ```
@@ -166,12 +197,13 @@ var masterKey = Crypto.randomBytes(32); // using the default aes-128-xts cipher
 var luksHeader = luks.createLUKSHeaderWithMasterKey(masterKey);
 ```
 
-#### <a id="createluksheader"></a> createLUKSHeader(passKey : _[Buffer](https://nodejs.org/api/buffer.html)|String_ [,[options](#options) : _Object_]) : [_Buffer_](https://nodejs.org/api/buffer.html)
+#### <a id="createluksheader"></a> createLUKSHeader(passKey : _[Buffer](https://nodejs.org/api/buffer.html)|string_ [,[options](#options) : _Object_]) : [_Buffer_](https://nodejs.org/api/buffer.html)
 ```javascript
 /**
  * Creates a luks header initialized with a passKey
- * @param {Buffer|String} passKey used to decrypt the master key
- * @param {Object} [options] options to use during header creation
+ * @public
+ * @param {Buffer|string} passKey - used to decrypt the master key
+ * @param {LUKSOptions} [options] - options to use during header creation
  * @returns {Buffer} the luks header
  */
 ```
@@ -183,12 +215,15 @@ var passKey = 'verysecretpassword';
 var luksHeader = luks.createLUKSHeader(passKey);
 ```
 
-#### <a id="getluksheaderinfo"></a> getLUKSHeaderInfo(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html)) : _Object_
+#### <a id="getluksheaderinfo"></a> getLUKSHeaderInfo(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html)) : [_LUKSInfo_](#luksinfo)
 ```javascript
 /**
- * Parses a LUKS header for its information
- * @param {Buffer} luksHeader to fetch information for
- * @returns {Object} header information
+ * Parses a LUKS header for its information, also acts as header validation
+ * @public
+ * @throws Will throw if the luksHeader is not a buffer : 'Not a buffer'
+ * @throws Will throw if the header is invalid : 'Not a luks header'
+ * @param {Buffer} luksHeader - to fetch information for
+ * @returns {LUKSInfo} header information
  */
 ```
 ##### Example:
@@ -200,15 +235,16 @@ var luksHeader = luks.createLUKSHeader(passKey);
 var info = luks.getLUKSHeaderInfo(luksHeader);
 ```
 
-#### <a id="getlukskeyslotindex"></a> getLUKSKeyslotIndex(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html), passKey : _[Buffer](https://nodejs.org/api/buffer.html)|String_ [,[options](#options) : _Object_]) : _Number_
+#### <a id="getlukskeyslotindex"></a> getLUKSKeyslotIndex(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html), passKey : _[Buffer](https://nodejs.org/api/buffer.html)|string_ [,[options](#options) : _Object_]) : _number_
 ```javascript
 /**
  * Fetches the keyslot index that matches the passKey
  * If multiple keyslots use the same passKey, then the first one to match will be returned
- * @param {Buffer} luksHeader the complete luks header
- * @param {Buffer|String} passKey the passKey to search a matching keyslot for
- * @param {Object} [options] options to use during keyslot search
- * @returns {Number} an index >0 if found, -1 if not
+ * @public
+ * @param {Buffer} luksHeader - the complete luks header
+ * @param {Buffer|string} passKey - the passKey to search a matching keyslot for
+ * @param {LUKSOptions} [options] - options to use during keyslot search
+ * @returns {number} an index >0 if found, -1 if not
  */
 ```
 ##### Example:
@@ -220,13 +256,14 @@ var luksHeader = luks.createLUKSHeader(passKey);
 var index = luks.getLUKSKeyslotIndex(luksHeader,passKey);
 ```
 
-#### <a id="getluksmasterkey"></a> getLUKSMasterKey(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html), passKey : _[Buffer](https://nodejs.org/api/buffer.html)|String_ [,[options](#options) : _Object_] : _Object_]) : [_Buffer_](https://nodejs.org/api/buffer.html)
+#### <a id="getluksmasterkey"></a> getLUKSMasterKey(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html), passKey : _[Buffer](https://nodejs.org/api/buffer.html)|string_ [,[options](#options) : _Object_]) : [_Buffer_](https://nodejs.org/api/buffer.html)
 ```javascript
 /**
  * Recover the masterkey using a passkey
- * @param {Buffer} luksHeader
- * @param {Buffer|String} passKey to unlock one of the keyslots
- * @param {Object} [options] options to supply to the function
+ * @public
+ * @param {Buffer} luksHeader - the header
+ * @param {Buffer|string} passKey - to unlock one of the keyslots
+ * @param {LUKSOptions} [options] - options to supply to the function
  * @returns {Buffer} the masterkey or null if passkey did not match any stored key
  */
 ```
@@ -239,7 +276,7 @@ var luksHeader = luks.createLUKSHeader(passKey);
 var masterKey = luks.getLUKSMasterKey(luksHeader,passKey);
 ```
 
-#### <a id="addlukskeywithmasterkey"></a> addLUKSKeyWithMasterKey(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html), masterKey : [_Buffer_](https://nodejs.org/api/buffer.html), passKey : _[Buffer](https://nodejs.org/api/buffer.html)|String_ [,[options](#options) : _Object_]) : _Number_
+#### <a id="addlukskeywithmasterkey"></a> addLUKSKeyWithMasterKey(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html), masterKey : [_Buffer_](https://nodejs.org/api/buffer.html), passKey : _[Buffer](https://nodejs.org/api/buffer.html)|string_ [,[options](#options) : _Object_]) : _number_
 ```javascript
 /**
  * Adds a new LUKS key to the header
@@ -261,15 +298,17 @@ var anotherPassKey = 'anothersecretpassword';
 var index = luks.addLUKSKeyWithMasterKey(luksHeader,masterKey,anotherPassKey);
 ```
 
-#### <a id="addlukskey"></a> addLUKSKey(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html), existingPassKey : _[Buffer](https://nodejs.org/api/buffer.html)|String_, newPassKey : _[Buffer](https://nodejs.org/api/buffer.html)|String_ [,[options](#options) : _Object_]) : _Number_
+#### <a id="addlukskey"></a> addLUKSKey(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html), existingPassKey : _[Buffer](https://nodejs.org/api/buffer.html)|string_, newPassKey : _[Buffer](https://nodejs.org/api/buffer.html)|string_ [,[options](#options) : _Object_]) : _number_
 ```javascript
 /**
  * Adds a new passKey to a luks header using an existing passKey
- * @param {Buffer} luksHeader the luks header
- * @param {Buffer|String} existingPassKey existing passKey to unlock masterkey
- * @param {Buffer|String} newPassKey the new key to add to an available keyblock
- * @param {Object} [options] options to use during key insertion
- * @returns {Number} The keyslot the passKey has been added to
+ * @public
+ * @throws Will throw if the masterKey could not be unlocked : 'Could not unlock masterkey'
+ * @param {Buffer} luksHeader - the luks header
+ * @param {Buffer|string} existingPassKey - existing passKey to unlock masterkey
+ * @param {Buffer|string} newPassKey - the new key to add to an available keyblock
+ * @param {LUKSOptions} [options] - options to use during key insertion
+ * @returns {number} The keyslot the passKey has been added to
  */
 ```
 ##### Example:
@@ -282,13 +321,15 @@ var anotherPassKey = 'anothersecretpassword';
 var index = luks.addLUKSKey(luksHeader,passKey,anotherPassKey);
 ```
 
-#### <a id="removelukskey"></a> removeLUKSKey(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html), index : _Number_ [,[options](#options) : _Object_]) : _void_
+#### <a id="removelukskey"></a> removeLUKSKey(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html), index : _number_ [,[options](#options) : _Object_]) : _void_
 ```javascript
 /**
  * Removes the passKey at index setting the keyblock to disabled
- * @param {Buffer} luksHeader the luks header
- * @param {Number} index index starting at 0 should not go over the maximum amount of keyslots
- * @param {Object} [options] options to use during key removal
+ * @public
+ * @throws Will throw if the index is out of bounds : 'Index is out of bounds'
+ * @param {Buffer} luksHeader - the luks header
+ * @param {number} index - index starting at 0 should not go over the maximum amount of keyslots
+ * @param {LUKSOptions} [options] - options to use during key removal
  */
 ```
 ##### Example:
@@ -306,9 +347,11 @@ luks.removeLUKSKey(luksHeader,0);
 ```javascript
 /**
  * Creates a duplex stream in which you write unencrypted data and read encrypted data
- * @param {Buffer} luksHeader the luks header
- * @param {Buffer} masterKey used to encrypt the data
- * @param {Object} [options] options to use during encryption
+ * @public
+ * @throws Will throw if the masterKey is not a buffer : 'MasterKey is not a buffer'
+ * @param {Buffer} luksHeader - the luks header
+ * @param {Buffer} masterKey - used to encrypt the data
+ * @param {LUKSOptions} [options] - options to use during encryption
  * @returns {stream.Duplex}
  */
 ```
@@ -325,13 +368,15 @@ FS.createReadStream('unencryptedfile')
 .pipe(FS.createWriteStream('encryptedfile'));
 ```
 
-#### <a id="encryptluks"></a> encryptLUKS(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html), passKey : _[Buffer](https://nodejs.org/api/buffer.html)|String_ [,[options](#options) : _Object_]) : [_stream.Duplex_](https://nodejs.org/api/stream.html#stream_class_stream_duplex)
+#### <a id="encryptluks"></a> encryptLUKS(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html), passKey : _[Buffer](https://nodejs.org/api/buffer.html)|string_ [,[options](#options) : _Object_]) : [_stream.Duplex_](https://nodejs.org/api/stream.html#stream_class_stream_duplex)
 ```javascript
 /**
  * Creates a duplex stream in which you write unencrypted data and read encrypted data
- * @param {Buffer} luksHeader the luks header
- * @param {Buffer|String} passKey passkey to decrypt masterkey
- * @param {Object} [options] options to use during encryption
+ * @public
+ * @throws Will throw if the masterKey could not be unlocked using the passKey : 'Could not unlock masterkey'
+ * @param {Buffer} luksHeader - the luks header
+ * @param {Buffer|string} passKey - passkey to decrypt masterkey
+ * @param {LUKSOptions} [options] - options to use during encryption
  * @returns {stream.Duplex}
  */
 ```
@@ -351,9 +396,11 @@ FS.createReadStream('unencryptedfile')
 ```javascript
 /**
  * Creates a duplex stream in which you write encrypted data and read unencrypted data
- * @param {Buffer} luksHeader the luks header
- * @param {Buffer} masterKey masterKey to decrypt data
- * @param {Object} [options] options to use during encryption
+ * @public
+ * @throws Will throw if the masterKey is not a buffer : 'MasterKey is not a buffer'
+ * @param {Buffer} luksHeader - the luks header
+ * @param {Buffer} masterKey - masterKey to decrypt data
+ * @param {LUKSOptions} [options] - options to use during encryption
  * @returns {stream.Duplex}
  */
 ```
@@ -370,13 +417,15 @@ FS.createReadStream('encryptedfile')
 .pipe(FS.createWriteStream('unencryptedfile'));
 ```
 
-#### <a id="decryptluks"></a> decryptLUKS(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html), passKey : _[Buffer](https://nodejs.org/api/buffer.html)|String_ [,[options](#options) : _Object_]) : [_stream.Duplex_](https://nodejs.org/api/stream.html#stream_class_stream_duplex)
+#### <a id="decryptluks"></a> decryptLUKS(luksHeader : [_Buffer_](https://nodejs.org/api/buffer.html), passKey : _[Buffer](https://nodejs.org/api/buffer.html)|string_ [,[options](#options) : _Object_]) : [_stream.Duplex_](https://nodejs.org/api/stream.html#stream_class_stream_duplex)
 ```javascript
 /**
  * Creates a duplex stream in which you write encrypted data and read unencrypted data
- * @param {Buffer} luksHeader the luks header
- * @param {Buffer|String} passKey passkey to decrypt masterkey
- * @param {Object} [options] options to use during encryption
+ * @public
+ * @throws Will throw if the masterKey could not be unlocked using the passKey : 'Could not unlock masterkey'
+ * @param {Buffer} luksHeader - the luks header
+ * @param {Buffer|string} passKey - passkey to decrypt masterkey
+ * @param {LUKSOptions} [options] - options to use during encryption
  * @returns {stream.Duplex}
  */
 ```
